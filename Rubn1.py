@@ -1,22 +1,26 @@
 import random
 import numpy as np
 
-a = np.arange(1, 46)
-for i in range(0, 6):
-    r = int(random.random()*45+1)
+start = 1
+end = 45
+ziehung = 6
+
+a = np.arange(start, end+1)
+for i in range(0, ziehung):
+    r = int(random.random()*end+1)
     a1 = a[r]
-    a[r] = a[44-i]
-    a[44 - i] = a1
+    a[r] = a[(end-1)-i]
+    a[(end-1) - i] = a1
 
-for i in range(40, 45):
+for i in range(end-6, end):
     print(a[i])
-
+print(a)
 
 dc = {}
-for i in range(1, 46):
-    dc[i] = i;
+for i in range(start, end+1):
+    dc[i] = i
 
 for i in range(0, 1000):
-    dc[int(random.random()*45+1)] += 1
+    dc[int(random.random()*end+1)] += 1
 
 print(dc)
