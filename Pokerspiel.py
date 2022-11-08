@@ -4,6 +4,7 @@ import random
 
 runden = 10000
 
+
 def drawHand():
     start = 1
     end = 52
@@ -22,7 +23,6 @@ def drawHand():
         mk.append(a[i])
 
     return mk
-
 
 
 def cardColor(arr):
@@ -70,14 +70,13 @@ def cardNumber(arr):
     elif ((arr % 13) == 8):
         return 10;
     elif ((arr % 13) == 9):
-        return 11;         #J
+        return 11;  # J
     elif ((arr % 13) == 10):
-        return 12;         #Q
+        return 12;  # Q
     elif ((arr % 13) == 11):
-        return 13;         #K
+        return 13;  # K
     elif ((arr % 13) == 12):
-        return 14;         #A
-
+        return 14;  # A
 
 
 def highCard(hand):
@@ -91,6 +90,7 @@ def nOfAKind2(hand):
         ranks[cardNumber(card)-1] += 1
     return ranks.max()
 '''
+
 
 def nOfAKind(hand):
     n = 1
@@ -124,13 +124,13 @@ def fullHouse(hand):
 def straight(hand):
     cards = numpy.sort(hand)
     rank = 1
-    for i in range(0, len(hand)-1):
-        if cardNumber(cards[i]) == (cardNumber(cards[i+1])-1):
+    for i in range(0, len(hand) - 1):
+        if cardNumber(cards[i]) == (cardNumber(cards[i + 1]) - 1):
             rank += 1
         if rank == 5:
-            #print(rank)
+            # print(rank)
             return True
-    #print(rank)
+    # print(rank)
     return False
 
 
@@ -140,9 +140,9 @@ def flush(hand):
         if cardColor(hand[i]) in cardColors(hand[i + 1:]):
             sameColor += 1
         if sameColor == 5:
-            #print(sameColor)
+            # print(sameColor)
             return True
-    #print(sameColor)
+    # print(sameColor)
     return False
 
 
@@ -156,7 +156,6 @@ def royalFlush(hand):
     if straight(hand) and flush(hand) and (highCard(hand) == 14):
         return True
     return False
-
 
 
 def getHand(hand):
@@ -192,34 +191,44 @@ def getHand(hand):
         return "High Card"
 
 
-h = numpy.zeros(10)
+dic = {"Royal Flush": 0,
+       "Straight Flush": 0,
+       "Quads": 0,
+       "Full House": 0,
+       "Flush": 0,
+       "Straight": 0,
+       "Three of Kind": 0,
+       "Two Pair": 0,
+       "One Pair": 0,
+       "High Card": 0
+       }
+
 for i in range(0, runden):
     hand = drawHand()
-    if getHand(hand) == "Royal Flush":
-        h[0] += 1
-    elif getHand(hand) == "Straight Flush":
-        h[1] += 1
-    elif getHand(hand) == "Quads":
-        h[2] += 1
-    elif getHand(hand) == "Full House":
-        h[3] += 1
-    elif getHand(hand) == "Flush":
-        h[4] += 1
-    elif getHand(hand) == "Straight":
-        h[5] += 1
-    elif getHand(hand) == "Three of Kind":
-        h[6] += 1
-    elif getHand(hand) == "Two Pair":
-        h[7] += 1
-    elif getHand(hand) == "One Pair":
-        h[8] += 1
-    elif getHand(hand) == "High Card":
-        h[9] += 1
+    if royalFlush(hand):
+        dic["Royal Flush"] = dic["Royal Flush"] + 1
+    elif straightFlush(hand):
+        dic["Straight Flush"] = dic["Straight Flush"] + 1
+    elif nOfAKind(hand) == 4:
+        dic["Quads"] = dic["Quads"] + 1
+    elif fullHouse(hand):
+        dic["Full House"] = dic["Full House"] + 1
+    elif flush(hand):
+        dic["Flush"] = dic["Flush"] + 1
+    elif straight(hand):
+        dic["Straight"] = dic["Straight"] + 1
+    elif nOfAKind(hand) == 3:
+        dic["Three of Kind"] = dic["Three of Kind"] + 1
+    elif twoPair(hand):
+        dic["Two Pair"] = dic["Two Pair"] + 1
+    elif nOfAKind(hand) == 2:
+        dic["One Pair"] = dic["One Pair"] + 1
+    else:
+        dic["High Card"] = dic["High Card"] + 1
 
-for i in (0, len(h)-1):
-    h[i] = h[i]/runden
-
-print(h)
+for i in dic:
+    dic[i] = dic[i] / runden * 100
+print(dic)
 
 
 '''
@@ -235,6 +244,3 @@ hand = [1, 1, 5, 5, 13]
 print(str(cardColors(hand)) + " " + str(cardNumbers(hand)))
 print(getHand(hand))
 '''
-
-
-
