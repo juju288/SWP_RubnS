@@ -2,7 +2,7 @@ import numpy
 import numpy as np
 import random
 
-runden = 10000
+runden = 100000
 
 
 def drawHand():
@@ -128,9 +128,7 @@ def straight(hand):
         if cardNumber(cards[i]) == (cardNumber(cards[i + 1]) - 1):
             rank += 1
         if rank == 5:
-            # print(rank)
             return True
-    # print(rank)
     return False
 
 
@@ -140,9 +138,7 @@ def flush(hand):
         if cardColor(hand[i]) in cardColors(hand[i + 1:]):
             sameColor += 1
         if sameColor == 5:
-            # print(sameColor)
             return True
-    # print(sameColor)
     return False
 
 
@@ -158,39 +154,6 @@ def royalFlush(hand):
     return False
 
 
-def getHand(hand):
-    if royalFlush(hand):
-        return "Royal Flush"
-    elif straightFlush(hand):
-        return "Straight Flush"
-    elif nOfAKind(hand) == 4:
-        return "Quads"
-    elif fullHouse(hand):
-        return "Full House"
-    elif flush(hand):
-        return "Flush"
-    elif straight(hand):
-        return "Straight"
-    elif nOfAKind(hand) == 3:
-        return "Three of Kind"
-    elif twoPair(hand):
-        return "Two Pair"
-    elif nOfAKind(hand) == 2:
-        return "One Pair"
-    else:
-        '''
-        if highCard(hand) == 11:
-            print('J')
-        elif highCard(hand) == 12:
-            print('Q')
-        elif highCard(hand) == 13:
-            print('K')
-        elif highCard(hand) == 14:
-            print('A')
-        else: print(highCard(hand))'''
-        return "High Card"
-
-
 dic = {"Royal Flush": 0,
        "Straight Flush": 0,
        "Quads": 0,
@@ -203,44 +166,61 @@ dic = {"Royal Flush": 0,
        "High Card": 0
        }
 
-for i in range(0, runden):
-    hand = drawHand()
+
+def getHand(hand):
     if royalFlush(hand):
         dic["Royal Flush"] = dic["Royal Flush"] + 1
+        return "Royal Flush"
     elif straightFlush(hand):
         dic["Straight Flush"] = dic["Straight Flush"] + 1
+        return "Straight Flush"
     elif nOfAKind(hand) == 4:
         dic["Quads"] = dic["Quads"] + 1
+        return "Quads"
     elif fullHouse(hand):
         dic["Full House"] = dic["Full House"] + 1
+        return "Full House"
     elif flush(hand):
         dic["Flush"] = dic["Flush"] + 1
+        return "Flush"
     elif straight(hand):
         dic["Straight"] = dic["Straight"] + 1
+        return "Straight"
     elif nOfAKind(hand) == 3:
         dic["Three of Kind"] = dic["Three of Kind"] + 1
+        return "Three of Kind"
     elif twoPair(hand):
         dic["Two Pair"] = dic["Two Pair"] + 1
+        return "Two Pair"
     elif nOfAKind(hand) == 2:
         dic["One Pair"] = dic["One Pair"] + 1
+        return "One Pair"
     else:
+        '''
+        if highCard(hand) == 11:
+            print('J')
+        elif highCard(hand) == 12:
+            print('Q')
+        elif highCard(hand) == 13:
+            print('K')
+        elif highCard(hand) == 14:
+            print('A')
+        else: print(highCard(hand))'''
         dic["High Card"] = dic["High Card"] + 1
-
-for i in dic:
-    dic[i] = dic[i] / runden * 100
-print(dic)
+        return "High Card"
 
 
-'''
-#random
-hand = drawHand()
-print(str(cardColors(hand)) + " " + str(cardNumbers(hand)))
-print(getHand(hand))
-'''
 
-'''
-#hand = [10, 9, 11, 12, 8]
-hand = [1, 1, 5, 5, 13]
-print(str(cardColors(hand)) + " " + str(cardNumbers(hand)))
-print(getHand(hand))
-'''
+def main():
+    for i in range(0, runden):
+        hand = drawHand()
+        getHand(hand)
+
+    for i in dic:
+        dic[i] = round(dic[i] / runden * 100, 2)
+    print(dic)
+
+
+if __name__ == "__main__":
+    main()
+
