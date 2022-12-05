@@ -61,7 +61,7 @@ class Firma:
 
     def init_mitarbeiter(self):
         self.mitarbeiter.append(Mitarbeiter("Tim", "Mair", Geschlecht.Männlich, Abteilung.IT, True))
-        self.mitarbeiter.append(Mitarbeiter())
+       # self.mitarbeiter.append(Mitarbeiter())
         self.mitarbeiter.append(Gruppenleiter("Tom", "Mayer", Geschlecht.Männlich, Abteilung.IT, 10))
 
 
