@@ -11,7 +11,6 @@ def determineWin(p1, p2):
         print("Unentschieden")
         return None
     if hand[p1] == hand[(p2 - 2)] or hand[p2] == hand[(p1 - 1)]:
-    #if p1 == (p2-2 if p2-2 > 0 else p2+3) or p1 == (p2+1 if p2+1 <= 4 else p2-5):
         print("Du hast gewonnen!")
         return True
     print("Du hast verloren!")
@@ -19,12 +18,11 @@ def determineWin(p1, p2):
 
 def getComputerHand():
     r = int(random.random() * 4)
-    return r    #hand[r]
+    return r    
 
 def getmyHand():
     print("Stein = 0", "Papier = 1", "Schere = 2", "Spock = 3", "Echse = 4")
-    return int(input("Deine Zahl:")) #hand[int(input("Deine Zahl:"))]
-
+    return int(input("Deine Zahl:")) 
 
 def get_dic():
     dic = {}
@@ -37,7 +35,6 @@ def get_dic():
     for i in hand:
         dic[f"{i} ChosenByComputer"] = 0
     return dic
-
 
 def insertDic(dic, playerChose, computerChose):
     dic["TotalPlays"] += 1
@@ -80,9 +77,9 @@ def printStats():
 
 def uploadData(dic):
     if not os.path.exists('stats.csv'):
-        w = csv.DictWriter(open("stats.csv", "w"), delimiter=";", fieldnames=dic.keys())
-        w.writeheader()
-        w.writerow(dic)
+        dw = csv.DictWriter(open("stats.csv", "w"), delimiter=";", fieldnames=dic.keys())
+        dw.writeheader()
+        dw.writerow(dic)
     else:
         saved_data = {}
         with open("stats.csv", "r") as data:
@@ -92,9 +89,9 @@ def uploadData(dic):
         for key in saved_data:
             if key in dic:
                 saved_data[key] = int(saved_data[key]) + int(dic[key])
-        w = csv.DictWriter(open("stats.csv", "w"), delimiter=";", fieldnames=dic.keys())
-        w.writeheader()
-        w.writerow(saved_data)
+        dw = csv.DictWriter(open("stats.csv", "w"), delimiter=";", fieldnames=dic.keys())
+        dw.writeheader()
+        dw.writerow(saved_data)
 
 
 def main():
