@@ -77,7 +77,7 @@ def printStats():
 
 def uploadData(doReplace, file):
     url = "http://localhost:8080/upload"
-    files = {'file': open(file, 'rb')}
+    files = {'file': open(file)}
     data = {'replace': doReplace}
     p = requests.post(url=url, files=files, params=data)
 
