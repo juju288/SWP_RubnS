@@ -97,7 +97,7 @@ def main():
             if not stats == None:
                 uploadData(True, 'stats.csv')
         elif ip == "END":
-            print("Bye")
+            print("bb")
             runIt = False
 
 if __name__ == "__main__":
