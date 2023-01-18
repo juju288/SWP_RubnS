@@ -80,7 +80,8 @@ def uploadData(doReplace, file):
     files = {'file': open(file)}
     data = {'replace': doReplace}
     p = requests.post(url=url, files=files, params=data)
-
+    
+    print(p.text)
 
 def main():
     runIt = True
