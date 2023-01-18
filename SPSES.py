@@ -75,23 +75,11 @@ def printStats():
     for item in saved_data:
         print(item + ":" + saved_data[item])
 
-def uploadData(dic):
-    if not os.path.exists('stats.csv'):
-        dw = csv.DictWriter(open("stats.csv", "w"), delimiter=";", fieldnames=dic.keys())
-        dw.writeheader()
-        dw.writerow(dic)
-    else:
-        saved_data = {}
-        with open("stats.csv", "r") as data:
-            output = csv.DictReader(data, delimiter=";")
-            for item in output:
-                saved_data = item
-        for key in saved_data:
-            if key in dic:
-                saved_data[key] = int(saved_data[key]) + int(dic[key])
-        dw = csv.DictWriter(open("stats.csv", "w"), delimiter=";", fieldnames=dic.keys())
-        dw.writeheader()
-        dw.writerow(saved_data)
+def uploadData(doReplace, file):
+    url = "http://localhost:8080/upload"
+    files = {'file': open(file, 'rb')}
+    data = {'replace': doReplace}
+    p = requests.post(url=url, files=files, params=data)
 
 
 def main():
@@ -106,7 +94,7 @@ def main():
             printStats()
         elif ip == "UPLOAD":
             if not stats == None:
-                uploadData(stats)
+                uploadData(True, 'stats.csv')
         elif ip == "END":
             print("Bye")
             runIt = False
