@@ -5,8 +5,9 @@ import os
 from numpy.core.defchararray import upper
 
 hand = ["Stein", "Papier", "Schere", "Spock", "Echse"]
-host = 'http://localhost:5000/stats'
+host = 'http://localhost:5000'
 name = (input(f"Playername: "))
+
 
 def determineWin(p1, p2):
     print(hand[p1] + " gegen " + hand[p2])
@@ -16,9 +17,11 @@ def determineWin(p1, p2):
         return True
     return False
 
+
 def getComputerHand():
     r = int(random.random() * 4)
-    return r    
+    return r  
+
 
 def getmyHand():
     print("Stein = 0", "Papier = 1", "Schere = 2", "Spock = 3", "Echse = 4")
@@ -43,7 +46,7 @@ def insertDic(dic, playerChose, computerChose):
     if determineWin(playerChose, computerChose):
         dic["Players-Wins"] += 1
     elif determineWin(playerChose, computerChose) == None:
-        dic["Draw"] +=1
+        dic["Draw"] += 1
     else:
         dic["Computers-Wins"] += 1
     dic[f"{hand[playerChose]} ChosenByPlayer"] += 1
@@ -101,13 +104,21 @@ def uploadData(dic):
 def uploadDataToServer(dic):
     print('Stats werden am Server gespeichert')
     save = str(dic)
-    p = requests.put('%s/%s' % (host, name), data={'score': save})
-    print(p)
-    print(p.json())
+    response = requests.post("http://127.0.0.1:5000/post",
+                             json={
+                                 "name": name,
+                                 "statistic": dic
+                             })
+    print(response)
+
 
 def getServerStats():
-    p = requests.get('%s/%s' % (host, name)).json()
-    print(p)
+    response = requests.get("http://127.0.0.1:5000/get",
+                            json={
+                                 "name": name
+                             })
+    print(response.json())
+
 
 def main():
     runIt = True
@@ -129,6 +140,7 @@ def main():
         elif ip == "END":
             print("Bye")
             runIt = False
+
 
 if __name__ == "__main__":
     main()
