@@ -71,7 +71,6 @@ class LinkedList:
         n = self.head
         for i in range(0, idx):
             n = n.next
-    #    n = Node(data, n.next, n.prev)
         n.data = data
 
 #1: O(n)   2: O(n)    arrl: O(1)
@@ -108,7 +107,7 @@ class LinkedList:
         while True:
             swapped = False
             for n in self:
-                if n.next and n > n.next: # swap nodes in place
+                if n.next and n > n.next: 
                     n1 = n
                     n2 = n.next
 
