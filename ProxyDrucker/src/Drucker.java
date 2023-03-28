@@ -1,5 +1,5 @@
 public interface Drucker {
 
-    public void drucken(String document);
+    public void drucken(String text);
 
 }
