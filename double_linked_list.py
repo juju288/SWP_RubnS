@@ -71,6 +71,7 @@ class LinkedList:
         n = self.head
         for i in range(0, idx):
             n = n.next
+    #    n = Node(data, n.next, n.prev)
         n.data = data
 
 #1: O(n)   2: O(n)    arrl: O(1)
@@ -95,19 +96,19 @@ class LinkedList:
         n.next = newnode
         newnode.prev = n
 
-#1:=(n) (wenn mit tail program. 1) 2: O(1)    arrl:
+#1:=(n) (wenn mit tail program. 1) 2: O(1)    arrl: O(1)
     def append(self, d):
         self.tail.next = Node(d)
         self.tail.next.prev = self.tail
         self.tail = self.tail.next
 
-#1: O(n^2)     2: O(n^2) arrl:
+#1: O(n^2)     2: O(n^2) arrl: O(n^2)
     def sort(self):
         l = len(self)
         while True:
             swapped = False
             for n in self:
-                if n.next and n > n.next: 
+                if n.next and n > n.next: # swap nodes in place
                     n1 = n
                     n2 = n.next
 
@@ -141,6 +142,18 @@ class LinkedList:
             if not swapped:
                 return
 
+#1: O(n) 2: O(n) arr: O(1)
+    def delete(self, i):
+        n = self.head
+        if i == 0: self.head = self.head.next
+        else:
+            while n is not self.tail and i > 0:
+                n = n.next
+                i -= 1
+            n.next.prev = n.prev
+            n.prev.next = n.next
+
+
 if __name__ == "__main__":
     lst = LinkedList([random.randint(0,9) for _ in range(0,5)])
     print(lst)
@@ -148,3 +161,6 @@ if __name__ == "__main__":
     print(lst[2])
     lst[1]=1
     print(lst)
+    lst.delete(2)
+    print(lst)
+
