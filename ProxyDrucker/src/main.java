@@ -1,12 +1,11 @@
 public class main {
 
     public static void main(String[] args) {
-        Drucker schwarzweissdrucker = new SchwarzWeissDruck();
-        Drucker farbdrucker = new FarbDruck();
+        ProxyDrucker meinDrucker = new ProxyDrucker();
 
-        schwarzweissdrucker.drucken("Hallo");
-
-        farbdrucker.drucken("Hallo in Farbe");
+        meinDrucker.drucken("Hallo");
+        meinDrucker.switchTo(new FarbDruck(), "Hallo in Farbe");
+        meinDrucker.switchTo(new SchwarzWeissDruck(), "Hallo in Schwarz");
 
         }
 }
